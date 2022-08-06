@@ -1,0 +1,53 @@
+select * from TBL_STATES
+INSERT INTO TBL_STATES (state_name,state_detail,active) VALUES ('ERROR', 'HUBO UN ERROR AL GENERAR EL BACKUP', '1')
+INSERT INTO TBL_STATES (state_name,state_detail,active) VALUES ('PENDIENTE', 'QUEDA PENDIENTE EL BACKUP POR MANTENIMIENTO', '1')
+INSERT INTO TBL_STATES (state_name,state_detail,active) VALUES ('CORRECTO', 'SE REALIZO EL BACKUP', '1')
+
+select * from TBL_TYPE
+INSERT INTO TBL_TYPE (typename,type_detail,active) VALUES ('FISICO', 'EQUIPO FISICO', '1')
+INSERT INTO TBL_TYPE (typename,type_detail,active) VALUES ('VIRTUAL', 'EQUIPO VIRTUAL', '1')
+INSERT INTO TBL_TYPE (typename,type_detail,active) VALUES ('BBDD', 'BASE DE DATOS', '1')
+
+SELECT * FROM TBL_DAYS
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('LUNES', 'Se realiza Backup cada Lunes', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('MARTES', 'Se realiza Backup cada Martes', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('MIERCOLES', 'Se realiza Backup cada Miércoles', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('JUEVES', 'Se realiza Backup cada Jueves', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('VIERNES', 'Se realiza Backup cada Viernes', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('SABADO', 'Se realiza Backup cada Sabado', '1')
+INSERT INTO TBL_DAYS (day_name,day_detail,active) VALUES ('DOMINGO', 'Se realiza Backup cada Domingo', '1')
+
+select * from TBL_SERVER
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRV001', 1, '172.16.87.10', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('MICRO22', 2, '172.16.88.138:4489', 'L-S', 7, '11:30 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('MICRO23', 2, '172.16.88.139:4489', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('OCSINVENTORY', 2, '172.16.87.222', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('PCRVILCA', 2, '172.16.88.86', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SERVICIOS_TSCCH', 2, '172.16.87.11', 'L-S', 7, '09:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRVWEB11', 2, '172.16.87.3', 'L-S', 7, '05:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRV002', 1, '172.16.87.8', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('PCFACT13', 2, '172.16.85.22', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVPLANILLA', 2, '172.16.87.4', 'L-S', 7, '07:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVPLANILLA', 3, '172.16.87.4', 'L-S', 7, '06:14 AM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVFACT11', 2, '172.16.87.19', 'L-S', 7, '06:30 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVFACT12', 2, '172.16.85.21', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVMYSQL', 2, '172.16.87.6', 'L-S', 7, '05:30 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SVMYSQL', 3, '172.16.87.6', 'L-S', 7, '06:00 AM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('TSCDCP001', 2, '172.16.87.1', 'L-S', 7, '06:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('TSCDCP002', 2, '192.168.0.2', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRVAFL', 1, '172.16.87.9', 'L-S', 7, '08:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SOFYA', 3, 'VACIO', 'L-S', 7, '04:30 AM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRVSIGE11', 1, '172.16.87.12', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SEGURIDAD,SIGE_TSC,TSCM', 3, '172.16.87.12', 'L-S', 7, '04:15 AM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRVSIGE12', 1, '172.16.87.13', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SORARITZY', 1, '172.16.87.2', 'L-S', 7, 'S/BK', 'NO', 0, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('Fisico-Arc', 3, 'VACIO', 'L-S', 7, '12:00 AM', '3 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('Fisico-Full', 3, 'VACIO', 'L-S', 7, '01:00 PM', '3 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('Lógico-usystex', 3, 'VACIO', 'L-S', 7, '03:00 PM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('Lógico-systextilrpt', 3, 'VACIO', 'L-S', 7, '03:30 PM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SRV_SISCONT', 1, '172.16.87.5', 'L-S', 7, '07:30 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SISCONT', 3, '172.16.87.5', 'L-S', 7, '04:41 AM', '7 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('SERVICIOS_LIMA', 1, '192.168.0.5', 'L-S', 7, '10:00 PM', '25 dias', 1, 1)
+INSERT INTO TBL_SERVER (server_name,id_type,server_ip,bkp_week,id_dia,bkp_start,bkp_retention,bkp_active,active) VALUES ('DHCP', 1, 'VACIO', 'L-S', 7, '06:00 PM', '7 dias', 1, 1)
+
+
