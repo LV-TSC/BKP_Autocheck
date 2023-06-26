@@ -1,3 +1,4 @@
+#####LIBRERIAS NECESARIAS#####
 import os
 import glob
 import pyodbc
@@ -8,40 +9,45 @@ import subprocess
 from pathlib import Path
 from sys import exit
 
+#####QUITAR VENTANA CMD#####
 CREATE_NO_WINDOW = 0x08000000
 subprocess.call("""net use S: /del /y""", creationflags=CREATE_NO_WINDOW)
-subprocess.call("""net use S: "\\172.16.88.10\bk_ftp" /user:tscsa\admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
+subprocess.call("""net use S: "\\172.16.87.23\bk_ftp" /user:tscsa\admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
 
+#####RUTA PARA ELIMINAR .FILE#####
 home_dir = Path.home()
 deletefiles = (f'{ home_dir }\\Textile Sourcing Company S.A.C\\TI-Soporte e Infraestructura - Controles\\Backup')
 extensions = ('.pdf','.PDF','.docx','.DOCX','.png','.jpg')
+
+#####OBTENER FECHAS#####
 TODAY = str(date.today())
 YESTERDAY = str(date.today() - timedelta(days = 1))
 
-
+#####SERVIDORES#####
 #ID1_SRV001 #ID3_MICRO23 #ID4_OCSINVENTORY #ID5_PCRVILCA #ID8_SRV002 #ID9_PCFACT13 #ID10_SVPLANILLA
 #ID13_SVFACT12 #ID17_TSCDCP002 #ID22_SRVSIGE12 #ID23_SORARITZY
-ID2_MICRO22 = (r"\\172.16.88.10\bk_v\BK_MICRO22\*")
-ID6_SERVICIOS_TSCCH = (r"\\172.16.88.10\bk_v\BK_SERVICIOS_TSCCH\*")
-ID7_SRVWEB11 = (r"\\172.16.88.10\bk_v\BK_SRVWEB11\*")
-ID11_SVPLANILLA_BBDD = (r"\\172.16.88.10\bk_ftp\sql\planilla\*")
-ID12_SVFACT11 = (r"\\172.16.88.10\bk_v\BK_SVFACT11\*")
-ID14_SVMYSQL = (r"\\172.16.88.10\bk_v\BK_SVMYSQL\*")
-ID15_SVMYSQL_BBDD = (r"\\172.16.88.10\bk_ftp\sql\mysql\*")
-ID16_TSCDCP001 = (r"\\172.16.88.10\bk_v\BK_TSCDCP001\*")
-ID18_SRVAFL = (r"\\172.16.88.10\bk_v\BK_SRVAFL\172.16.87.9\*")
-ID19_SOFYA = (r"\\172.16.88.10\bk_ftp\sql\sofya\*")
-ID20_SRVSIGE11 = (r"\\172.16.88.10\bk_v\BK_SRVSIGE11\172.16.87.12\*")
-ID21_SEGURIDAD = (r"\\172.16.88.10\bk_ftp\sql\sige\*")
-ID24_FISICO_ARC = (r"\\172.16.88.10\bk_ftp\ora\fis\*")
-ID25_FISICO_FULL = (r"\\172.16.88.10\bk_ftp\ora\fis\*")
-ID26_LOGICO_USYSTEX = (r"\\172.16.88.10\bk_ftp\ora\log\*")
-ID27_LOGICO_SYSTEXTILRPT = (r"\\172.16.88.10\bk_ftp\ora\log\*")
-ID28_SRV_SISCONT = (r"\\172.16.88.10\bk_v\BK_SRVSISCONT\172.16.87.5\*")
-ID29_SISCONT = (r"\\172.16.88.10\bk_ftp\sql\siscont\*")
-ID30_SERVICIOS_LIMA = (r"\\172.16.88.10\bk_v\SERVICIOS_LIMA\*")
-ID31_DHCP = (r"\\172.16.88.10\bk_ftp\dhcp\*")
+ID2_MICRO22 = (r"\\172.16.87.23\bk_v\BK_MICRO22\*")
+ID6_SERVICIOS_TSCCH = (r"\\172.16.87.23\bk_v\BK_SERVICIOS_TSCCH_2\*")
+ID7_SRVWEB11 = (r"\\172.16.87.23\bk_v\SRVWEB11\*")
+ID11_SVPLANILLA_BBDD = (r"\\172.16.87.23\bk_ftp\sql\planilla\*")
+ID12_SVFACT11 = (r"\\172.16.87.23\bk_v\BK_SVFACT11\*")
+ID14_SVMYSQL = (r"\\172.16.87.23\bk_v\BK_SVMYSQL\*")
+ID15_SVMYSQL_BBDD = (r"\\172.16.87.23\bk_ftp\sql\mysql\*")
+ID16_TSCDCP001 = (r"\\172.16.87.23\bk_v\BK_TSCDCP001\*")
+ID18_SRVAFL = (r"\\172.16.87.23\bk_v\BK_SRVAFL\172.16.87.9\*")
+ID19_SOFYA = (r"\\172.16.87.23\bk_ftp\sql\sofya\*")
+ID20_SRVSIGE11 = (r"\\172.16.87.23\bk_v\BK_SRVSIGE11\172.16.87.12\*")
+ID21_SEGURIDAD = (r"\\172.16.87.23\bk_ftp\sql\sige\*")
+ID24_FISICO_ARC = (r"\\172.16.87.23\bk_ftp\ora\fis\*")
+ID25_FISICO_FULL = (r"\\172.16.87.23\bk_ftp\ora\fis\*")
+ID26_LOGICO_USYSTEX = (r"\\172.16.87.23\bk_ftp\ora\log\*")
+ID27_LOGICO_SYSTEXTILRPT = (r"\\172.16.87.23\bk_ftp\ora\log\*")
+ID28_SRV_SISCONT = (r"\\172.16.87.23\bk_v\BK_SRVSISCONT\172.16.87.5\*")
+ID29_SISCONT = (r"\\172.16.87.23\bk_ftp\sql\siscont\*")
+ID30_SERVICIOS_LIMA = (r"\\172.16.87.23\bk_v\SERVICIOS_LIMA\*")
+ID31_DHCP = (r"\\172.16.87.23\bk_ftp\dhcp\*")
 
+#####FUNCIONES#####
 def crearconexion():
     global conexion
     direccion_servidor = 'SRVAFL'
@@ -65,18 +71,43 @@ def sqlvalidation(server,idsql,yesterday,today):
     if len(file_list) != 0:
         latest_file = max(file_list, key=os.path.getctime)
         lastdate = str(time.strftime("%Y-%m-%d",time.localtime(os.path.getmtime(latest_file))))
+        hour = int(time.strftime("%H",time.localtime(os.path.getmtime(latest_file))))
 
         if lastdate == TODAY:
             crearconexion()
-            try:
-                with conexion.cursor() as cursor:
-                    consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
-                    cursor.execute(consulta, today, idsql, today)
-                    conexion.commit()
-            except Exception as e:
-                print(e)
-            finally:
-                conexion.close()
+            if hour < 4 and idsql == "6":
+                try:
+                    with conexion.cursor() as cursor:
+                        consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
+                        cursor.execute(consulta, today, idsql, yesterday)
+                        conexion.commit()
+                except Exception as e:
+                    print(e)
+                finally:
+                    conexion.close()
+
+            elif hour < 4 and server == "30":
+                try:
+                    with conexion.cursor() as cursor:
+                        consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
+                        cursor.execute(consulta, today, idsql, yesterday)
+                        conexion.commit()
+                except Exception as e:
+                    print(e)
+                finally:
+                    conexion.close()
+
+            else:
+                crearconexion()
+                try:
+                    with conexion.cursor() as cursor:
+                        consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
+                        cursor.execute(consulta, today, idsql, today)
+                        conexion.commit()
+                except Exception as e:
+                    print(e)
+                finally:
+                    conexion.close()
 
         elif lastdate == YESTERDAY:
             crearconexion()
@@ -141,5 +172,4 @@ if __name__ == "__main__":
         print(e)
 
     finally:
-        conexion.close()
         exit()
