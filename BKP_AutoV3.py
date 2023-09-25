@@ -11,8 +11,12 @@ from sys import exit
 
 #####QUITAR VENTANA CMD#####
 CREATE_NO_WINDOW = 0x08000000
-subprocess.call("""net use S: /del /y""", creationflags=CREATE_NO_WINDOW)
-subprocess.call("""net use S: "\\172.16.87.23\bk_ftp" /user:tscsa\admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
+subprocess.call("""net use n: /del /i""", creationflags=CREATE_NO_WINDOW)
+subprocess.call("""net use n: "\\172.16.87.23\bk_v" /user:admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
+
+CREATE_NO_WINDOW = 0x08000000
+subprocess.call("""net use m: /del /i""", creationflags=CREATE_NO_WINDOW)
+subprocess.call("""net use m: "\\172.16.87.16\bktsc11" /user:user11 Xtr3m4.@22 /p:yes""", creationflags=CREATE_NO_WINDOW)
 
 #####RUTA PARA ELIMINAR .FILE#####
 home_dir = Path.home()
@@ -25,27 +29,26 @@ YESTERDAY = str(date.today() - timedelta(days = 1))
 
 #####SERVIDORES#####
 #ID1_SRV001 #ID3_MICRO23 #ID4_OCSINVENTORY #ID5_PCRVILCA #ID8_SRV002 #ID9_PCFACT13 #ID10_SVPLANILLA
-#ID13_SVFACT12 #ID17_TSCDCP002 #ID22_SRVSIGE12 #ID23_SORARITZY
+#ID13_SVFACT12 #ID17_TSCDCP002 #ID22_SRVSIGE12 #ID23_SORARITZY #ID31_DHCP
 ID2_MICRO22 = (r"\\172.16.87.23\bk_v\BK_MICRO22\*")
 ID6_SERVICIOS_TSCCH = (r"\\172.16.87.23\bk_v\BK_SERVICIOS_TSCCH_2\*")
 ID7_SRVWEB11 = (r"\\172.16.87.23\bk_v\SRVWEB11\*")
-ID11_SVPLANILLA_BBDD = (r"\\172.16.87.23\bk_ftp\sql\planilla\*")
+ID11_SVPLANILLA_BBDD = (r"\\172.16.87.16\bktsc11\planilla\*") ##SYNOLOGY##
 ID12_SVFACT11 = (r"\\172.16.87.23\bk_v\BK_SVFACT11\*")
 ID14_SVMYSQL = (r"\\172.16.87.23\bk_v\BK_SVMYSQL\*")
-ID15_SVMYSQL_BBDD = (r"\\172.16.87.23\bk_ftp\sql\mysql\*")
+ID15_SVMYSQL_BBDD = (r"\\172.16.87.16\bktsc11\mysql\*") ##SYNOLOGY##
 ID16_TSCDCP001 = (r"\\172.16.87.23\bk_v\BK_TSCDCP001\*")
 ID18_SRVAFL = (r"\\172.16.87.23\bk_v\BK_SRVAFL\172.16.87.9\*")
-ID19_SOFYA = (r"\\172.16.87.23\bk_ftp\sql\sofya\*")
+ID19_SOFYA = (r"\\172.16.87.16\bktsc11\sofya\*") ##SYNOLOGY##
 ID20_SRVSIGE11 = (r"\\172.16.87.23\bk_v\BK_SRVSIGE11\172.16.87.12\*")
-ID21_SEGURIDAD = (r"\\172.16.87.23\bk_ftp\sql\sige\*")
-ID24_FISICO_ARC = (r"\\172.16.87.23\bk_ftp\ora\fis\*")
-ID25_FISICO_FULL = (r"\\172.16.87.23\bk_ftp\ora\fis\*")
-ID26_LOGICO_USYSTEX = (r"\\172.16.87.23\bk_ftp\ora\log\*")
-ID27_LOGICO_SYSTEXTILRPT = (r"\\172.16.87.23\bk_ftp\ora\log\*")
+ID21_SEGURIDAD = (r"\\172.16.87.16\bktsc11\sige\*") ##SYNOLOGY##
+ID24_FISICO_ARC = (r"\\172.16.87.16\bktsc11\ora_fis\*") ##SYNOLOGY##
+ID25_FISICO_FULL = (r"\\172.16.87.16\bktsc11\ora_fis\*") ##SYNOLOGY##
+ID26_LOGICO_USYSTEX = (r"\\172.16.87.16\bktsc11\ora_log\*") ##SYNOLOGY##
+ID27_LOGICO_SYSTEXTILRPT = (r"\\172.16.87.16\bktsc11\ora_log\*") ##SYNOLOGY##
 ID28_SRV_SISCONT = (r"\\172.16.87.23\bk_v\BK_SRVSISCONT\172.16.87.5\*")
-ID29_SISCONT = (r"\\172.16.87.23\bk_ftp\sql\siscont\*")
+ID29_SISCONT = (r"\\172.16.87.16\bktsc11\siscont\*") ##SYNOLOGY##
 ID30_SERVICIOS_LIMA = (r"\\172.16.87.23\bk_v\SERVICIOS_LIMA\*")
-ID31_DHCP = (r"\\172.16.87.23\bk_ftp\dhcp\*")
 
 #####FUNCIONES#####
 def crearconexion():
@@ -60,33 +63,33 @@ def crearconexion():
     except Exception as e:
         print("Ocurrió un error al conectar a SQL Server: ", e)
 
+def calc_size_folder(directorio): return sum([sum([os.path.getsize(rutas+"\\"+archivo) for archivo in archivos]) for rutas, _, archivos in os.walk(directorio)])
+
 def sqlvalidation(server,idsql,yesterday,today):
     file_list=[]
     for filename in glob.glob(server):
         if ".vbm" not in filename:
             file_list.append(filename)
-        else:
-            pass
 
     if len(file_list) != 0:
         latest_file = max(file_list, key=os.path.getctime)
+
+        sizefile = os.stat(latest_file).st_size
+        size_folder = calc_size_folder(latest_file)
+
+        lastsize = 0
+        if sizefile > size_folder:
+            lastsize = sizefile
+        else :
+            lastsize = size_folder
+
         lastdate = str(time.strftime("%Y-%m-%d",time.localtime(os.path.getmtime(latest_file))))
         hour = int(time.strftime("%H",time.localtime(os.path.getmtime(latest_file))))
 
-        if lastdate == TODAY:
+        if lastdate == TODAY and lastsize > 100:
             crearconexion()
-            if hour < 4 and idsql == "6":
-                try:
-                    with conexion.cursor() as cursor:
-                        consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
-                        cursor.execute(consulta, today, idsql, yesterday)
-                        conexion.commit()
-                except Exception as e:
-                    print(e)
-                finally:
-                    conexion.close()
-
-            elif hour < 4 and server == "30":
+            if hour <= 2 and idsql == "30" or hour <= 4 and idsql == "6" or hour <= 1:
+                S = "AYER"
                 try:
                     with conexion.cursor() as cursor:
                         consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
@@ -99,6 +102,7 @@ def sqlvalidation(server,idsql,yesterday,today):
 
             else:
                 crearconexion()
+                S = "HOY"
                 try:
                     with conexion.cursor() as cursor:
                         consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
@@ -109,7 +113,8 @@ def sqlvalidation(server,idsql,yesterday,today):
                 finally:
                     conexion.close()
 
-        elif lastdate == YESTERDAY:
+        elif lastdate == YESTERDAY and lastsize > 100:
+            S = "AYER"
             crearconexion()
             try:
                 with conexion.cursor() as cursor:
@@ -121,18 +126,22 @@ def sqlvalidation(server,idsql,yesterday,today):
             finally:
                 conexion.close()
         else:
+            S = "NOP"
             crearconexion()
             try:
                 with conexion.cursor() as cursor:
-                    consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '1', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
+                    consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '1', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and idstatus = '2' and bkp_date = convert(date,?)"
                     cursor.execute(consulta, today, idsql, yesterday)
                     conexion.commit()
             except Exception as e:
                 print(e)
             finally:
                 conexion.close()
-    else:
-        pass
+
+        #print(f'Size : {lastsize}')
+        #print(f'Last : {latest_file}')
+        #print(f"-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}")
+        #print('---------------------------------------------------------------')
 
 if __name__ == "__main__":
     try:
@@ -155,7 +164,6 @@ if __name__ == "__main__":
         sqlvalidation(ID28_SRV_SISCONT,"28",YESTERDAY, TODAY)
         sqlvalidation(ID29_SISCONT,"29",YESTERDAY, TODAY)
         sqlvalidation(ID30_SERVICIOS_LIMA,"30",YESTERDAY, TODAY)
-        sqlvalidation(ID31_DHCP,"31",YESTERDAY, TODAY)
 
         for file in os.listdir(deletefiles):
             if os.path.isfile(str(deletefiles) + "\\" + str(file)):
@@ -172,4 +180,6 @@ if __name__ == "__main__":
         print(e)
 
     finally:
+        conexion.close()
         exit()
+        
