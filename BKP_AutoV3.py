@@ -8,6 +8,7 @@ from datetime import timedelta
 import subprocess
 from pathlib import Path
 from sys import exit
+from termcolor import colored
 
 #####QUITAR VENTANA CMD#####
 CREATE_NO_WINDOW = 0x08000000
@@ -113,18 +114,6 @@ def sqlvalidation(server,idsql,yesterday,today):
                 finally:
                     conexion.close()
 
-        elif lastdate == YESTERDAY and lastsize > 100:
-            S = "AYER"
-            crearconexion()
-            try:
-                with conexion.cursor() as cursor:
-                    consulta = "use SRV_BACKUP update TBL_RECORDS set idstatus = '3', reg_user = 'RPA', reg_date = convert(date,?) where idserver = ? and bkp_date = convert(date,?)"
-                    cursor.execute(consulta, today, idsql, yesterday)
-                    conexion.commit()
-            except Exception as e:
-                print(e)
-            finally:
-                conexion.close()
         else:
             S = "NOP"
             crearconexion()
@@ -138,9 +127,18 @@ def sqlvalidation(server,idsql,yesterday,today):
             finally:
                 conexion.close()
 
-        #print(f'Size : {lastsize}')
-        #print(f'Last : {latest_file}')
-        #print(f"-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}")
+        #if S == "HOY":
+        #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'green'))
+        #    print(colored(f'Last : {latest_file}', 'green'))
+        #    print(colored(f'-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}','green'))
+        #elif S == "AYER":
+        #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'yellow'))
+        #    print(colored(f'Last : {latest_file}', 'yellow'))
+        #    print(colored(f'-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}','yellow'))
+        #else:
+        #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'red'))
+        #    print(colored(f'Last : {latest_file}', 'red'))
+        #    print(colored(f'-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}','red'))
         #print('---------------------------------------------------------------')
 
 if __name__ == "__main__":
