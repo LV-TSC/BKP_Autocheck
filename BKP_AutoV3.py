@@ -31,7 +31,7 @@ YESTERDAY = str(date.today() - timedelta(days = 1))
 #####SERVIDORES#####
 #ID1_SRV001 #ID3_MICRO23 #ID4_OCSINVENTORY #ID5_PCRVILCA #ID8_SRV002 #ID9_PCFACT13 #ID10_SVPLANILLA
 #ID13_SVFACT12 #ID17_TSCDCP002 #ID22_SRVSIGE12 #ID23_SORARITZY #ID31_DHCP
-ID2_MICRO22 = (r"\\172.16.87.23\bk_v\BK_MICRO22\*")
+ID2_MICRO22 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_MICRO22\*")
 ID6_SERVICIOS_TSCCH = (r"\\172.16.87.23\bk_v\BK_SERVICIOS_TSCCH_2\*")
 ID7_SRVWEB11 = (r"\\172.16.87.23\bk_v\SRVWEB11\*")
 ID11_SVPLANILLA_BBDD = (r"\\172.16.87.16\bktsc11\planilla\*") ##SYNOLOGY##
@@ -72,9 +72,11 @@ def sqlvalidation(server,idsql,yesterday,today):
         if ".vbm" not in filename:
             file_list.append(filename)
 
+    #Valida si existe el Backup y obtiene el ultimo archivo
     if len(file_list) != 0:
         latest_file = max(file_list, key=os.path.getctime)
 
+        #Obtiene el tamaño del ultimo archivo
         sizefile = os.stat(latest_file).st_size
         size_folder = calc_size_folder(latest_file)
 
@@ -84,12 +86,13 @@ def sqlvalidation(server,idsql,yesterday,today):
         else :
             lastsize = size_folder
 
+        #Obtine la fecha del ultimo archivo
         lastdate = str(time.strftime("%Y-%m-%d",time.localtime(os.path.getmtime(latest_file))))
         hour = int(time.strftime("%H",time.localtime(os.path.getmtime(latest_file))))
 
-        if lastdate == TODAY and lastsize > 100:
+        if lastdate == TODAY and lastsize > 10000000:
             crearconexion()
-            if hour <= 2 and idsql == "30" or hour <= 4 and idsql == "6" or hour <= 1:
+            if (hour <= 2 and idsql == "30") or (hour <= 4 and idsql == "6") or (hour <= 1 and idsql in (6,30)):
                 S = "AYER"
                 try:
                     with conexion.cursor() as cursor:
@@ -149,7 +152,6 @@ if __name__ == "__main__":
         sqlvalidation(ID11_SVPLANILLA_BBDD,"11",YESTERDAY, TODAY)
         sqlvalidation(ID12_SVFACT11,"12",YESTERDAY, TODAY)
         sqlvalidation(ID14_SVMYSQL,"14",YESTERDAY, TODAY)
-        sqlvalidation(ID15_SVMYSQL_BBDD,"15",YESTERDAY, TODAY)
         sqlvalidation(ID16_TSCDCP001,"16",YESTERDAY, TODAY)
         sqlvalidation(ID18_SRVAFL,"18",YESTERDAY, TODAY)
         sqlvalidation(ID19_SOFYA,"19",YESTERDAY, TODAY)
