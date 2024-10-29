@@ -13,7 +13,7 @@ from termcolor import colored
 #####QUITAR VENTANA CMD#####
 CREATE_NO_WINDOW = 0x08000000
 subprocess.call("""net use n: /del /i""", creationflags=CREATE_NO_WINDOW)
-subprocess.call("""net use n: "\\172.16.87.23\bk_v" /user:admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
+subprocess.call("""net use n: "\\172.16.47.15\bk_v" /user:admin Kambio.891 /p:yes""", creationflags=CREATE_NO_WINDOW)
 
 CREATE_NO_WINDOW = 0x08000000
 subprocess.call("""net use m: /del /i""", creationflags=CREATE_NO_WINDOW)
@@ -55,13 +55,11 @@ ID50_NUBE_SISCONT = (r"\\172.16.87.16\bknube\siscont\*") ##SYNOLOGY##
 ID51_NUBE_ORAFIS = (r"\\172.16.87.16\bknube\ora_fis\*") ##SYNOLOGY##
 ID52_NUBE_ORALOG = (r"\\172.16.87.16\bknube\ora_log\*") ##SYNOLOGY##
 
-#### SERVIDORES FISICOS Y VIRTUALE
-ID02_MICRO22 = (r"\\172.16.87.23\e\VM-BK_MICRO22\*") ##SYNOLOGY##
-# ID02_MICRO22 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_MICRO22\*") ##SYNOLOGY##
+#### SERVIDORES FISICOS Y VIRTUALES
+ID02_MICRO22 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_MICRO22\*") ##SYNOLOGY##
 ID04_OCSINVENTORY = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_OCSINVENTORY\*") ##SYNOLOGY##
 ID05_PCRVILCA = (r"\\172.16.87.16\servers_fisicos\ActiveBackupData\PC-VIRTU0001JC-user11-Default\*") ##SYNOLOGY##
-ID12_SVFACT11 = (r"\\172.16.87.23\e\VM-BK_SVFACT11\*") ##SYNOLOGY##
-# ID12_SVFACT11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SVFACT11\*") ##SYNOLOGY##
+ID12_SVFACT11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SVFACT11\*") ##SYNOLOGY##
 ID13_SVFACT12 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SVFACT12\*") ##SYNOLOGY##
 ID17_TSCDCP002 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_TSCDCP002\*") ##SYNOLOGY##
 ID18_SRVAFL = (r"\\172.16.87.16\servers_fisicos\ActiveBackupData\Server-SRVAFL-user11-BKP_SRV\*") ##SYNOLOGY##
@@ -73,10 +71,8 @@ ID35_SRV_WEB11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVWEB11\*") #
 ID36_SRV_SERVICIOS_LIMA = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SERVICIOS_LIMA\*") ##SYNOLOGY##
 ID39_SRVNAGIOS11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVNAGIOS11\*") ##SYNOLOGY##
 ID40_SRVCACTI11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVCACTI11\*") ##SYNOLOGY##
-ID41_SRVBDORA11 = (r"\\172.16.87.23\e\VM-BK_SRVBDORA11\*") ##SYNOLOGY##
-# ID41_SRVBDORA11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVBDORA11\*") ##SYNOLOGY##
-ID42_SRVUNIFI11 = (r"\\172.16.87.23\e\VM-BK_SRVUNIFI11\*") ##SYNOLOGY##
-# ID42_SRVUNIFI11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVUNIFI11\*") ##SYNOLOGY##
+ID41_SRVBDORA11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVBDORA11\*") ##SYNOLOGY##
+ID42_SRVUNIFI11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVUNIFI11\*") ##SYNOLOGY##
 ID43_SRVSIGE13 = (r"\\172.16.87.16\servers_fisicos\ActiveBackupData\Server-SRVSIGE13-user11-BKP_SRV\*") ##SYNOLOGY##
 ID44_SRVWSUS11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVWSUS11\*") ##SYNOLOGY##
 ID45_SRVPRINTER11 = (r"\\172.16.87.16\bkvir11\ActiveBackupData\VM-BK_SRVPRINTER11\*") ##SYNOLOGY##
@@ -87,7 +83,7 @@ def crearconexion():
     global conexion
     direccion_servidor = 'SRVAFL'
     nombre_bd = 'SRV_BACKUP'
-    nombre_usuario = 'RPA'
+    nombre_usuario = 'SRV_BKP'
     password = '123qweASD!"#'
     try:
         conexion = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' +
@@ -151,10 +147,6 @@ def sqlvalidation(server,idsql,yesterday,today):
         #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'green'))
         #    print(colored(f'Last : {latest_file}', 'green'))
         #    print(colored(f'-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}','green'))
-        # elif S == "AYER":
-        #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'yellow'))
-        #    print(colored(f'Last : {latest_file}', 'yellow'))
-        #    print(colored(f'-{S}- Fecha: {lastdate}, Hora: {hour}, Server: {server}','yellow'))
         # else:
         #    print(colored(f'Server: {server}  -  Size : {lastsize}', 'red'))
         #    print(colored(f'Last : {latest_file}', 'red'))
